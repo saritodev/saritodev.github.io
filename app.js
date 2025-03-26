@@ -41,41 +41,42 @@ function selectRoutine(){
     if ([...dayButtons].every(button => button.disabled === true)){
         console.log("YIIIPIYAIYO");
     } else{
-        dayButtons.forEach(button => {
-            button.addEventListener('click', () => {
+            dayButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            //buscamos el div que contiene todos los dias y lo ponemos visible
+            let daysDiv = document.getElementById("days-menu");
+            daysDiv.style.display = "none";
+            //buscamos el div que contiene la rutina y lo apagamos
+            todayRoutine.style.display = "flex";
+            drawExercises(button.value);
+
+            // si se presiona el boton de back cuando se dibuje la rutina del dia, se vuelve al estado de inicio.
+            let backButton = document.getElementById("back-button");
+            backButton.addEventListener('click', function () {
                 //buscamos el div que contiene todos los dias y lo ponemos visible
                 let daysDiv = document.getElementById("days-menu");
-                daysDiv.style.display = "none";
+                daysDiv.style.display = "flex";
                 //buscamos el div que contiene la rutina y lo apagamos
-                todayRoutine.style.display = "flex";
-                drawExercises(button.value);
-    
-                // si se presiona el boton de back cuando se dibuje la rutina del dia, se vuelve al estado de inicio.
-                let backButton = document.getElementById("back-button");
-                backButton.addEventListener('click', function () {
-                    //buscamos el div que contiene todos los dias y lo ponemos visible
-                    let daysDiv = document.getElementById("days-menu");
-                    daysDiv.style.display = "flex";
-                    //buscamos el div que contiene la rutina y lo apagamos
-                    todayRoutine.style.display = "none";
-                    selectRoutine();
-                    this.disabled = false;
-                })
-                
-                // marcar como listo el dia de la semana
-                const endDayButton = document.getElementById("end-button");
-                endDayButton.addEventListener('click', () => {
-                    //buscamos el div que contiene todos los dias y lo ponemos visible
-                    let daysDiv = document.getElementById("days-menu");
-                    daysDiv.style.display = "flex";
-                    //buscamos el div que contiene la rutina y lo apagamos
-                    todayRoutine.style.display = "none";
-                    selectRoutine();
-                    button.disabled = true;
-                })
+                todayRoutine.style.display = "none";
+                selectRoutine();
+                this.disabled = false;
             })
-        });
+            
+            // marcar como listo el dia de la semana
+            const endDayButton = document.getElementById("end-button");
+            endDayButton.addEventListener('click', () => {
+                //buscamos el div que contiene todos los dias y lo ponemos visible
+                let daysDiv = document.getElementById("days-menu");
+                daysDiv.style.display = "flex";
+                //buscamos el div que contiene la rutina y lo apagamos
+                todayRoutine.style.display = "none";
+                selectRoutine();
+                button.disabled = true;
+            })
+        })
+    });
     }
+
 }
 
 // Una vez seleccionado el dia, se dibuja en pantalla
