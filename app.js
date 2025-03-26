@@ -2,7 +2,7 @@ import { gymDays } from './modules/gymDays.js'
 
 const gymList = document.getElementById("exercises-list"); // ul donde guardaremos cada dia de la rutina
 const todayRoutine = document.getElementById("today-routine"); // la rutina de hoy
-
+let selectedDayButton = null;
 // main menu para seleccionar el dia (LUNES, MARTES...)
 function createDays(){
         // iniciamos el div de la rutina de hoy apagado
@@ -35,49 +35,42 @@ function createDays(){
     
 }
 // lógica de los botones de los días para poder elergirlos
-function selectRoutine(){
-    let dayButtons = document.querySelectorAll(".day-button");
-
-    if ([...dayButtons].every(button => button.disabled === true)){
-        console.log("YIIIPIYAIYO");
-    } else{
-            dayButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            //buscamos el div que contiene todos los dias y lo ponemos visible
-            let daysDiv = document.getElementById("days-menu");
-            daysDiv.style.display = "none";
-            //buscamos el div que contiene la rutina y lo apagamos
-            todayRoutine.style.display = "flex";
-            drawExercises(button.value);
-
-            // si se presiona el boton de back cuando se dibuje la rutina del dia, se vuelve al estado de inicio.
-            let backButton = document.getElementById("back-button");
-            backButton.addEventListener('click', function () {
-                //buscamos el div que contiene todos los dias y lo ponemos visible
-                let daysDiv = document.getElementById("days-menu");
-                daysDiv.style.display = "flex";
-                //buscamos el div que contiene la rutina y lo apagamos
-                todayRoutine.style.display = "none";
-                selectRoutine();
-                this.disabled = false;
-            })
-            
-            // marcar como listo el dia de la semana
-            const endDayButton = document.getElementById("end-button");
-            endDayButton.addEventListener('click', () => {
-                //buscamos el div que contiene todos los dias y lo ponemos visible
-                let daysDiv = document.getElementById("days-menu");
-                daysDiv.style.display = "flex";
-                //buscamos el div que contiene la rutina y lo apagamos
-                todayRoutine.style.display = "none";
-                selectRoutine();
-                button.disabled = true;
-            })
-        })
+function selectRoutine() {
+    const dayButtons = document.querySelectorAll(".day-button");
+    const daysDiv = document.getElementById("days-menu");
+    const todayRoutine = document.getElementById("today-routine");
+  
+    // Asignar listener solo una vez a cada botón
+    dayButtons.forEach(button => {
+      if (!button.dataset.listenerAttached) {
+        button.addEventListener("click", () => {
+          daysDiv.style.display = "none";
+          todayRoutine.style.display = "flex";
+          drawExercises(button.value);
+  
+          // Guardar el botón seleccionado
+          selectedDayButton = button;
+          selectedDayButton.disabled = true;
+        });
+  
+        // Marcar que ya tiene listener para no duplicar
+        button.dataset.listenerAttached = "true";
+      }
     });
-    }
+  }
 
-}
+document.getElementById("back-button").addEventListener("click", () => {
+    document.getElementById("days-menu").style.display = "flex";
+    document.getElementById("today-routine").style.display = "none";
+    
+    if (selectedDayButton) {
+        selectedDayButton.disabled = false;
+    }
+})
+document.getElementById("end-button").addEventListener("click", () => {
+    document.getElementById("days-menu").style.display = "flex";
+    document.getElementById("today-routine").style.display = "none";
+})
 
 // Una vez seleccionado el dia, se dibuja en pantalla
 function drawExercises(day){
@@ -104,23 +97,40 @@ function drawExercises(day){
     
     
         li.className = "exercise-container";
+        exerciseCheck.className = "exercise-checkbox";
         exerciseDiv.className = "exercise-box";
         exerciseName.className = "exercise-name";
         exerciseRepetitions.className = "exercise-repetitions";
-    
+
+        
+
+
+        li.addEventListener('click', () => {
+            exerciseCheck.checked = exerciseCheck.checked ? false : true;
+            if (exerciseCheck.checked) {
+                gymList.appendChild(li); // Mueve el li al final del contenedor
+                li.classList.add("checked"); // visual opcional
+              } else { 
+                gymList.insertBefore(li,gymList.firstChild); // mueve el li arriba del todo
+                li.classList.remove("checked");
+              }
+        })
+
         li.appendChild(exerciseCheck);
         exerciseDiv.appendChild(exerciseName);
         exerciseDiv.appendChild(exerciseRepetitions);
         li.appendChild(exerciseDiv);
         gymList.appendChild(li);
-    
     });
+
+    
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     //inicializamos la app
     createDays();
     selectRoutine();
+
 })
 
 
