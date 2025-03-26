@@ -1,5 +1,5 @@
 const gymDays = {
-    "lunes": [
+    "día 1": [
       { nombre: "Press Banca", series: 4, repeticiones: 10 },
       { nombre: "Dominadas/Jalón al Pecho", series: 4, repeticiones: 10 },
       { nombre: "Press Militar", series: 3, repeticiones: 12 },
@@ -7,14 +7,14 @@ const gymDays = {
       { nombre: "Fondos en Paralelas", series: 3, repeticiones: 12 },
       { nombre: "Curl de Bíceps", series: 3, repeticiones: 15 },
     ],
-    "martes": [
+    "día 2": [
       { nombre: "Sentadillas", series: 4, repeticiones: 10 },
       { nombre: "Peso Muerto Rumano", series: 4, repeticiones: 10 },
       { nombre: "Zancadas con Mancuernas", series: 3, repeticiones: 12 },
       { nombre: "Elevación de Talones", series: 4, repeticiones: 20 },
       { nombre: "Plancha Abdominal", series: 3, repeticiones: 60 },
     ],
-    "miércoles": [
+    "día 3": [
       { nombre: "Press Inclinado", series: 4, repeticiones: 10 },
       { nombre: "Remo a 1 Brazo", series: 4, repeticiones: 12 },
       { nombre: "Face Pulls", series: 4, repeticiones: 15 },
@@ -22,7 +22,7 @@ const gymDays = {
       { nombre: "Jalón Tras Nuca", series: 3, repeticiones: 12 },
       { nombre: "Extensión de Tríceps en Polea", series: 3, repeticiones: 15 },
     ],
-    "jueves": [
+    "día 4": [
       { nombre: "Peso Muerto Convencional", series: 4, repeticiones: 8 },
       { nombre: "Prensa de Piernas", series: 4, repeticiones: 12 },
       { nombre: "Hip Thrust", series: 4, repeticiones: 15 },

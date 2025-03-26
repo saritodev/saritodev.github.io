@@ -47,10 +47,20 @@ h1{
 .exercise-repetitions{
     color: #747474;
 }
-#end-button{
+#buttons{
+    display: flex;
+    gap: 20px;
+}
+#buttons button{
     width: 150px;
     padding: 8px;
-    text-align: center;
+}
+#days-menu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 45vh;
+    gap: 20px;
     box-sizing: border-box;
 }
 #days-container{
@@ -58,5 +68,27 @@ h1{
     justify-content: center;
     box-sizing: border-box;
     gap: 30px;
-    padding-top: 50vh;
+
+}
+.day-button, #buttons button{
+    height: 30px;
+    min-width: 100px;
+    border-radius: 20px;
+    box-shadow: 1px 2px 15px 4px #cecece2b;
+    background-color: #747474;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease-in, background-color 0.1s ease-in-out;
+}
+.day-button:hover, #buttons button:hover{
+    transform: scale(1.1);
+    background-color: #cecece;
+
+}
+#back-button{
+    background-color: #fff;
+}
+
+.hidden{
+    display: none !important;
 }
