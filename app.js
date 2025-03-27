@@ -75,56 +75,53 @@ document.getElementById("end-button").addEventListener("click", () => {
 // Una vez seleccionado el dia, se dibuja en pantalla
 function drawExercises(day){
     // limpiamos la vista de los ejercicios
-    gymList.innerHTML = "";    
-    let Exercises = gymDays[day];
+    gymList.innerHTML = "";
+    let Exercises =  gymDays[day];
     let titleDay = document.getElementById("title-day");
     titleDay.innerHTML = `RUTINA ${day}`.toUpperCase() // añadimos al titulo el dia.
 
-    // creamos cada ejercicio de la rutina con su respectivo check
-    Exercises.forEach(exercise => {
+    let checkedDiv = document.createElement('div'); // div donde se va a almacenar todos los ejercicios que ya están hechos.
+    checkedDiv.className = "exercise-box";
+  // creamos cada ejercicio de la rutina con su respectivo check
+  Exercises.forEach(exercise => {
 
-        let li = document.createElement('li');
-        let exerciseCheck = document.createElement('input');
-        let exerciseName = document.createElement('label');
-        let exerciseRepetitions = document.createElement('label');
-        let exerciseDiv = document.createElement('div');
+    let li = document.createElement('li');
+    let exerciseCheck = document.createElement('input');
+    let exerciseName = document.createElement('label');
+    let exerciseRepetitions = document.createElement('label');
+    let exerciseDiv = document.createElement('div');
 
-    
-    
-        exerciseCheck.type = 'checkbox';
-        exerciseName.innerText = `${exercise.nombre}`;
-        exerciseRepetitions.innerHTML = `Repeticiones: <b>${exercise.repeticiones}</b>`;
-    
-    
-        li.className = "exercise-container";
-        exerciseCheck.className = "exercise-checkbox";
-        exerciseDiv.className = "exercise-box";
-        exerciseName.className = "exercise-name";
-        exerciseRepetitions.className = "exercise-repetitions";
-
-        
+    exerciseCheck.type = 'checkbox';
+    exerciseName.innerText = `${exercise.nombre}`;
+    exerciseRepetitions.innerHTML = `Repeticiones: <b>${exercise.repeticiones}</b>`;
 
 
-        li.addEventListener('click', () => {
-            exerciseCheck.checked = exerciseCheck.checked ? false : true;
-            if (exerciseCheck.checked) {
-                gymList.appendChild(li); // Mueve el li al final del contenedor
-                li.classList.add("checked"); // visual opcional
-              } else { 
-                gymList.insertBefore(li,gymList.firstChild); // mueve el li arriba del todo
-                li.classList.remove("checked");
-              }
-        })
+    li.className = "exercise-container";
+    exerciseCheck.className = "exercise-checkbox";
+    exerciseDiv.className = "exercise-box";
+    exerciseName.className = "exercise-name";
+    exerciseRepetitions.className = "exercise-repetitions";
 
-        li.appendChild(exerciseCheck);
-        exerciseDiv.appendChild(exerciseName);
-        exerciseDiv.appendChild(exerciseRepetitions);
-        li.appendChild(exerciseDiv);
-        gymList.appendChild(li);
-    });
+    li.addEventListener('click', () => {
+        exerciseCheck.checked = exerciseCheck.checked ? false : true;
+        if (exerciseCheck.checked) {
+            checkedDiv.appendChild(li); // Mueve el li al final del contenedor
+            gymList.appendChild(checkedDiv);
+            li.classList.add("checked"); // visual opcional
+          } else { 
+            gymList.insertBefore(li,gymList.lastChild); // mueve el li arriba del todo
+            li.classList.remove("checked");
+          }
+    })
 
-    
+    li.appendChild(exerciseCheck);
+    exerciseDiv.appendChild(exerciseName);
+    exerciseDiv.appendChild(exerciseRepetitions);
+    li.appendChild(exerciseDiv);
+    gymList.appendChild(li);
+  });
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     //inicializamos la app
@@ -132,6 +129,3 @@ document.addEventListener('DOMContentLoaded', () => {
     selectRoutine();
 
 })
-
-
-
